@@ -1,2 +1,4 @@
 node_modules
 .idea
+.serverless
+.DS_Store

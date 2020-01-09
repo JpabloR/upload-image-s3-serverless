@@ -1,35 +1,32 @@
 const aws = require('aws-sdk');
-const multer = require('multer');
-const multerS3 = require('multer-s3');
+var request = require('request');
 
 aws.config.update({
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    region: process.env.AWS_REGION
+    secretAccessKey: process.env.SECRET_ACCESS_KEY,
+    accessKeyId: process.env.ACCESS_KEY,
+    region: process.env.REGION
 });
 
 const s3 = new aws.S3();
 
-const fileFilter = (req, file, cb) => {
-    console.log('Validating image');
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-        cb(null, true);
-    } else {
-        cb(new Error('Invalid file type, only JPEG and PNG is allowed!'), false);
-    }
-}
+exports.uploadImage = function(url, key, callback) {
+    request({
+        url: url,
+        encoding: null
+    }, function(err, res, body) {
+        console.log("into function")
+        console.log("error is", err)
+        console.log("res is", res)
+        console.log("body is", body)
+        if (err)
+            return callback(err, res);
 
-const upload = multer({
-    fileFilter,
-    storage: multerS3({
-        acl: 'public-read',
-        s3,
-        bucket: 'sailsteststorageunit',
-        contentType: multerS3.AUTO_CONTENT_TYPE,
-        key: function (req, file, cb) {
-            cb(null, Date.now().toString())
-        }
+        s3.putObject({
+            Bucket: "alfred-lead-images",
+            Key: `${key}.png`,
+            ContentType: res.headers['content-type'],
+            ContentLength: res.headers['content-length'],
+            Body: body // buffer
+        }, callback);
     })
-});
-
-module.exports = upload;
+}
