@@ -1,6 +1,6 @@
 {
   "name": "uploadImages",
-  "version": "0.1.0",
+  "version": "1.0",
   "dependencies": {
     "aws-sdk": "^2.351.0",
     "body-parser": "^1.18.3",
