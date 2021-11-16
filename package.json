@@ -2,7 +2,7 @@
   "name": "uploadImages",
   "version": "1.0",
   "dependencies": {
-    "aws-sdk": "^2.351.0",
+    "aws-sdk": "^2.814.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "express": "^4.16.4",
