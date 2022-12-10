@@ -5,7 +5,7 @@
     "aws-sdk": "^2.351.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "public-ip": "^4.0.0",
     "request": "^2.88.0",
     "serverless-http": "^2.3.0"
